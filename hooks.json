@@ -3,15 +3,63 @@
         "id": "deploy-wuniverse",
         "execute-command": "/var/www/wuniverse/deploy.sh",
         "command-working-directory": "/var/www/wuniverse",
-        "trigger-rule": {
-            "match": {
-                "type": "value",
-                "value": "refs/heads/master",
-                "parameter": {
-                    "source": "payload",
-                    "name": "ref"
-                }
+        "response-message": "Deployment started successfully",
+        "response-headers": [
+            {
+                "name": "X-Deploy-Status",
+                "value": "initiated"
             }
+        ],
+        "pass-arguments-to-command": [
+            {
+                "source": "payload",
+                "name": "head_commit.id"
+            },
+            {
+                "source": "payload", 
+                "name": "pusher.name"
+            }
+        ],
+        "pass-environment-to-command": [
+            {
+                "envname": "WEBHOOK_DEPLOY_USER",
+                "source": "payload",
+                "name": "pusher.name"
+            },
+            {
+                "envname": "WEBHOOK_COMMIT_ID",
+                "source": "payload",
+                "name": "head_commit.id"
+            },
+            {
+                "envname": "WEBHOOK_REPO_NAME",
+                "source": "payload",
+                "name": "repository.name"
+            }
+        ],
+        "trigger-rule": {
+            "and": [
+                {
+                    "match": {
+                        "type": "value",
+                        "value": "refs/heads/master",
+                        "parameter": {
+                            "source": "payload",
+                            "name": "ref"
+                        }
+                    }
+                },
+                {
+                    "match": {
+                        "type": "value",
+                        "value": "wuniverse",
+                        "parameter": {
+                            "source": "payload",
+                            "name": "repository.name"
+                        }
+                    }
+                }
+            ]
         }
     }
 ]

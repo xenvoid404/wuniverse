@@ -1,0 +1,31 @@
+[Unit]
+Description=Wuniverse Webhook Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/wuniverse
+ExecStart=/usr/local/bin/webhook -hooks /var/www/wuniverse/hooks.json -verbose -hotreload -port 9000 -ip 127.0.0.1
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/wuniverse /var/log /var/backups
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+# Environment
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=HOME=/var/www
+
+[Install]
+WantedBy=multi-user.target
