@@ -1,10 +1,33 @@
+version: '3.8'
+
 services:
-    wuniverse:
-        container_name: wuniverse
-        build:
-            context: .
-        ports:
-            - '3001:3001'
-        restart: always
-        volumes:
-            - /var/www/wuniverse/public/uploads:/app/public/uploads
+  wuniverse:
+    container_name: wuniverse
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '127.0.0.1:3001:3001'  # Bind to localhost only for security
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    volumes:
+      - /var/www/wuniverse/public/uploads:/app/public/uploads
+    networks:
+      - wuniverse-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  wuniverse-network:
+    driver: bridge
