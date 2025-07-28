@@ -1,10 +1,28 @@
+version: '3.8'
+
 services:
-    wuniverse:
-        container_name: wuniverse
-        build:
-            context: .
-        ports:
-            - '3001:3001'
-        restart: always
-        volumes:
-            - /var/www/wuniverse/public/uploads:/app/public/uploads
+  wuniverse:
+    container_name: wuniverse
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '127.0.0.1:3001:3001'
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    volumes:
+      - /var/www/wuniverse/public/uploads:/app/public/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - wuniverse-network
+
+networks:
+  wuniverse-network:
+    driver: bridge

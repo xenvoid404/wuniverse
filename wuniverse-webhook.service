@@ -1,0 +1,27 @@
+[Unit]
+Description=Wuniverse Webhook Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/var/www/wuniverse
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/local/bin/webhook -hooks /var/www/wuniverse/hooks.json -verbose -hotreload -port 9000
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=wuniverse-webhook
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/wuniverse /var/log
+
+[Install]
+WantedBy=multi-user.target

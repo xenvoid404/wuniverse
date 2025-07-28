@@ -2,14 +2,53 @@
 
 set -e
 
-cd /var/www/wuniverse
+# Configuration
+PROJECT_DIR="/var/www/wuniverse"
+LOG_FILE="/var/log/wuniverse-deploy.log"
+BRANCH="master"
 
-echo "🌀 Pulling latest changes..."
-git pull origin master
+# Function to log with timestamp
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG_FILE
+}
 
-echo "🚢 Rebuilding docker containers..."
+# Create log file if it doesn't exist
+sudo touch $LOG_FILE
+sudo chown ubuntu:ubuntu $LOG_FILE
+
+log "🚀 Starting deployment process..."
+
+# Navigate to project directory
+cd $PROJECT_DIR
+
+# Pull latest changes
+log "🌀 Pulling latest changes from $BRANCH..."
+git fetch origin
+git reset --hard origin/$BRANCH
+
+# Stop and remove old containers
+log "🛑 Stopping existing containers..."
 docker compose down --remove-orphans
+
+# Remove old images to free space
+log "🧹 Cleaning up old Docker images..."
+docker image prune -f
+
+# Build and start new containers
+log "🚢 Building and starting new containers..."
 docker compose build --no-cache
 docker compose up -d
 
-echo "✅ Deploy completed!"
+# Wait for container to be healthy
+log "⏳ Waiting for container to be ready..."
+sleep 10
+
+# Check if container is running
+if docker compose ps | grep -q "Up"; then
+    log "✅ Deployment completed successfully!"
+    log "🌐 Application is running at http://localhost:3001"
+else
+    log "❌ Deployment failed - container is not running"
+    docker compose logs
+    exit 1
+fi
