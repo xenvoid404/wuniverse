@@ -14,8 +14,8 @@ log() {
 
 # Create log file if it doesn't exist
 if [ ! -f "$LOG_FILE" ]; then
-    sudo touch "$LOG_FILE" || touch "$LOG_FILE"
-    sudo chown www-data:www-data "$LOG_FILE" 2>/dev/null || true
+    touch "$LOG_FILE" || touch "$LOG_FILE"
+    chown www-data:www-data "$LOG_FILE" 2>/dev/null || true
 fi
 
 log "🚀 Starting deployment process..."
