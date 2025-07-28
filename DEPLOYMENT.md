@@ -1,6 +1,6 @@
 # Wuniverse Deployment Guide
 
-Panduan lengkap untuk deploy aplikasi Wuniverse di VPS Debian 12 dengan Docker, auto-deploy webhook, dan Nginx.
+Panduan lengkap untuk deploy aplikasi Wuniverse di VPS Debian 12 dengan Docker, auto-deploy webhook, dan Nginx menggunakan Node.js 22.
 
 ## 📋 Prerequisites
 
@@ -8,6 +8,7 @@ Panduan lengkap untuk deploy aplikasi Wuniverse di VPS Debian 12 dengan Docker, 
 - Root access atau sudo privileges
 - Domain name (opsional, bisa menggunakan IP)
 - GitHub repository dengan webhook access
+- Node.js 22 (akan diinstall via Docker)
 
 ## 🚀 Quick Setup
 
@@ -67,7 +68,7 @@ Di GitHub repository Anda:
 /var/www/wuniverse/
 ├── app/                          # Next.js app directory
 ├── public/                       # Static files
-├── Dockerfile                    # Optimized multi-stage Docker build
+├── Dockerfile                    # Optimized multi-stage Docker build (Node.js 22)
 ├── docker-compose.yaml           # Production Docker Compose
 ├── next.config.ts               # Next.js config with standalone output
 ├── deploy.sh                    # Enhanced deployment script
@@ -82,7 +83,7 @@ Di GitHub repository Anda:
 ### Docker Configuration
 
 **Dockerfile** - Multi-stage build untuk optimasi:
-- Base image: Node.js 20 Alpine
+- Base image: Node.js 22 Alpine
 - Security: Non-root user
 - Optimization: Standalone output
 - Size: Minimal production image
@@ -189,7 +190,7 @@ sudo journalctl -u wuniverse-webhook -f
 ### Health Checks
 
 ```bash
-# Check application health
+# Check application health (will show Node.js 22 version)
 curl http://localhost:3001/health
 
 # Check webhook endpoint
@@ -197,6 +198,24 @@ curl http://localhost:9000/webhook
 
 # Check via nginx
 curl http://your-domain.com/health
+```
+
+Example health check response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "version": "1.0.0",
+  "environment": "production",
+  "nodeVersion": "v22.x.x",
+  "uptime": 3600,
+  "memory": {
+    "used": 45,
+    "total": 128,
+    "external": 12
+  },
+  "pid": 1
+}
 ```
 
 ## 🔒 Security Features
@@ -215,7 +234,7 @@ curl http://your-domain.com/health
 
 ### Docker Security
 - Non-root user
-- Minimal base image
+- Minimal base image (Alpine)
 - Network isolation
 - Resource limits
 
@@ -237,7 +256,15 @@ curl http://your-domain.com/health
    sudo systemctl restart docker
    ```
 
-2. **Webhook not triggering**
+2. **Node.js version mismatch**
+   ```bash
+   # Check container Node.js version
+   sudo docker compose exec wuniverse node --version
+   
+   # Should show v22.x.x
+   ```
+
+3. **Webhook not triggering**
    ```bash
    # Check webhook service
    sudo systemctl status wuniverse-webhook
@@ -249,7 +276,7 @@ curl http://your-domain.com/health
    curl -X POST http://localhost:9000/webhook
    ```
 
-3. **Nginx 502 Bad Gateway**
+4. **Nginx 502 Bad Gateway**
    ```bash
    # Check if application is running
    sudo docker compose ps
@@ -261,7 +288,7 @@ curl http://your-domain.com/health
    curl http://localhost:3001
    ```
 
-4. **Permission errors**
+5. **Permission errors**
    ```bash
    # Fix ownership
    sudo chown -R www-data:www-data /var/www/wuniverse
@@ -306,6 +333,7 @@ sudo systemctl status certbot.timer
 
 ### Docker Optimization
 - Multi-stage builds
+- Node.js 22 Alpine base image
 - Standalone output
 - Image layer caching
 - Resource limits
@@ -358,5 +386,6 @@ Jika mengalami masalah:
 3. Test connectivity
 4. Check firewall rules
 5. Verify file permissions
+6. Confirm Node.js 22 is being used in container
 
 Untuk bantuan lebih lanjut, buka issue di GitHub repository.

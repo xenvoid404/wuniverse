@@ -14,6 +14,7 @@ PROJECT_DIR="/var/www/wuniverse"
 WEBHOOK_PORT="9000"
 APP_PORT="3001"
 DOMAIN="your-domain.com"  # Change this to your domain
+NODE_VERSION="22"  # Using Node.js 22
 
 # Function to print colored output
 print_status() {
@@ -199,14 +200,40 @@ create_health_check() {
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  return NextResponse.json(
-    { 
+  try {
+    const healthData = {
       status: 'healthy',
       timestamp: new Date().toISOString(),
-      version: process.env.npm_package_version || '1.0.0'
-    },
-    { status: 200 }
-  );
+      version: process.env.npm_package_version || '1.0.0',
+      environment: process.env.NODE_ENV || 'development',
+      nodeVersion: process.version,
+      uptime: process.uptime(),
+      memory: {
+        used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+        total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
+        external: Math.round(process.memoryUsage().external / 1024 / 1024),
+      },
+      pid: process.pid,
+    };
+
+    return NextResponse.json(healthData, { 
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { 
+        status: 'unhealthy',
+        timestamp: new Date().toISOString(),
+        error: 'Health check failed',
+      },
+      { status: 500 }
+    );
+  }
 }
 EOF
     
@@ -254,6 +281,12 @@ start_services() {
 display_instructions() {
     print_success "Setup completed successfully!"
     echo ""
+    echo -e "${YELLOW}Configuration Summary:${NC}"
+    echo "- Node.js Version: $NODE_VERSION"
+    echo "- Application Port: $APP_PORT"
+    echo "- Webhook Port: $WEBHOOK_PORT"
+    echo "- Project Directory: $PROJECT_DIR"
+    echo ""
     echo -e "${YELLOW}Next steps:${NC}"
     echo "1. Update the domain name in /etc/nginx/sites-available/wuniverse"
     echo "2. Configure your GitHub webhook to point to: http://$DOMAIN/webhook"
@@ -272,7 +305,7 @@ display_instructions() {
 
 # Main execution
 main() {
-    print_status "Starting Wuniverse server setup..."
+    print_status "Starting Wuniverse server setup with Node.js $NODE_VERSION..."
     
     check_root
     update_system
