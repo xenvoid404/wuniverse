@@ -1,0 +1,10 @@
+services:
+    wuniverse:
+        container_name: wuniverse
+        build:
+            context: .
+        ports:
+            - '3001:3001'
+        restart: always
+        volumes:
+            - /var/www/wuniverse/public/uploads:/app/public/uploads
