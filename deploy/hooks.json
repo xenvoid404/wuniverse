@@ -1,6 +1,6 @@
 [
     {
-        "id": "deploy-wuniverse",
+        "id": "wuniverse-webhook",
         "execute-command": "/var/www/wuniverse/deploy/run.sh",
         "command-working-directory": "/var/www/wuniverse",
         "response-message": "Deployment triggered successfully",
