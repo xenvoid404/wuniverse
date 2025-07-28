@@ -1,0 +1,7 @@
+[
+    {
+        "id": "deploy-wuniverse",
+        "execute-command": "/var/www/wuniverse/deploy.sh",
+        "command-working-directory": "/var/www/wuniverse"
+    }
+]
