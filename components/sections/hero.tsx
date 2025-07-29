@@ -1,21 +1,30 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { FaArrowRight, FaRegClock } from 'react-icons/fa';
-import { GoZap } from 'react-icons/go';
-import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+import { FaArrowRight, FaMusic, FaImages } from 'react-icons/fa';
+import { RiMemoriesLine } from 'react-icons/ri';
+import { BsFillPeopleFill } from 'react-icons/bs';
 
 export function Hero() {
     return (
         <section
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden cyberpunk-bg"
             aria-labelledby="hero-heading"
         >
-            {/* Background decoration - more subtle */}
+            {/* Cyberpunk Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-                <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-secondary/5 rounded-full blur-3xl" />
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/3 rounded-full blur-3xl" />
+                <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse" />
+                <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-magenta-500/10 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-bl from-yellow-500/5 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+                
+                {/* Grid overlay */}
+                <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+                
+                {/* Scanning lines */}
+                <div className="absolute inset-0">
+                    <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent animate-scan-line"></div>
+                </div>
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 sm:px-8 lg:px-12">
