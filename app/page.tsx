@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/sections/hero';
+import { MusicPlayer } from '@/components/sections/music-player';
 
 export const metadata: Metadata = {
     title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
@@ -89,6 +90,9 @@ export default function HomePage() {
             <main id="main-content" className="flex flex-col">
                 {/* Hero Section */}
                 <Hero />
+
+                {/* Music Player Section */}
+                <MusicPlayer />
             </main>
         </>
     );
