@@ -657,6 +657,56 @@ input[type='checkbox']:focus {
     80% { transform: translate(-2px, -2px); }
 }
 
+.bg-grid-pattern {
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+@keyframes scan-line {
+    0% { top: 0%; }
+    100% { top: 100%; }
+}
+
+.animate-scan-line {
+    animation: scan-line 3s linear infinite;
+}
+
+/* Custom Slider Styles */
+.slider {
+    background: linear-gradient(to right, var(--neon-cyan) 0%, var(--neon-cyan) 50%, var(--muted) 50%, var(--muted) 100%);
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    cursor: pointer;
+    border: 2px solid var(--background);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    cursor: pointer;
+    border: 2px solid var(--background);
+}
+
+/* Line clamp utility */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Print styles */
 @media print {
     *,

@@ -15,7 +15,7 @@ export const soundtracks: Soundtrack[] = [
         artist: 'Memory Lane',
         fileName: 'nostalgic-nights.mp3',
         duration: '3:45',
-        cover: '/images/music-covers/nostalgic-nights.jpg',
+        cover: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop&crop=center',
         memories: ['Malam pertama main bareng', 'Sesi gaming marathon']
     },
     {
@@ -24,7 +24,7 @@ export const soundtracks: Soundtrack[] = [
         artist: 'Cyber Friends',
         fileName: 'digital-dreams.mp3',
         duration: '4:12',
-        cover: '/images/music-covers/digital-dreams.jpg',
+        cover: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&h=400&fit=crop&crop=center',
         memories: ['Build base pertama kali', 'Adventure di dunia baru']
     },
     {

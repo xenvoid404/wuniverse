@@ -17,8 +17,8 @@ export const timelineEvents: TimelineEvent[] = [
         icon: '🎮',
         color: 'var(--neon-cyan)',
         images: [
-            '/images/timeline/first-play-1.jpg',
-            '/images/timeline/first-play-2.jpg'
+            'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=600&h=400&fit=crop&crop=center',
+            'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop&crop=center'
         ]
     },
     {
