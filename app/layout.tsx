@@ -11,7 +11,7 @@ const rajdhani = Rajdhani({
     subsets: ['latin'],
     display: 'swap',
     preload: true,
-    weight: ['300', '400', '500', '600', '700', '800', '900']
+    weight: ['300', '400', '500', '600', '700']
 });
 
 export const viewport: Viewport = {
@@ -28,35 +28,31 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
     metadataBase: new URL('https://wuniverse.web.id'),
     title: {
-        default: 'Xenkit - Developer Tools for the Web',
-        template: '%s | Xenkit'
+        default: 'Wuniverse - Memory Keeper of Friendship',
+        template: '%s | Wuniverse'
     },
     description:
-        'Xenkit is a modern toolkit for developers offering a wide range of utilities such as encoders, decoders, generators, and formatters — all in one place to enhance your productivity.',
+        'Wuniverse adalah tempat untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman. Simpan momen berharga, dengarkan musik favorit, dan jelajahi timeline pertemanan yang tak terlupakan.',
     keywords: [
-        'developer tools',
-        'online dev tools',
-        'code formatter',
-        'base64 decoder',
-        'uuid generator',
-        'text utilities',
-        'developer productivity',
-        'online tools for developers',
-        'web tools',
-        'Xenkit',
-        'password generator',
-        'json formatter',
-        'url encoder',
-        'regex tester',
-        'color picker',
-        'hash generator',
-        'free online tools',
-        'developer utilities',
-        'coding tools'
+        'memory keeper',
+        'photo album',
+        'friendship memories',
+        'kenangan teman',
+        'album foto',
+        'musik kenangan',
+        'timeline pertemanan',
+        'foto lama',
+        'memory fragments',
+        'friendship timeline',
+        'photo gallery',
+        'music player',
+        'friends network',
+        'wuniverse',
+        'cyberpunk memories'
     ],
     authors: [{ name: 'Xenvoid', url: 'https://github.com/xenvoid404' }],
     creator: 'Xenvoid',
-    publisher: 'Xenkit',
+    publisher: 'Wuniverse',
     formatDetection: {
         email: false,
         address: false,
@@ -81,26 +77,26 @@ export const metadata: Metadata = {
     },
     openGraph: {
         type: 'website',
-        locale: 'en_US',
+        locale: 'id_ID',
         url: 'https://wuniverse.web.id',
-        siteName: 'Xenkit',
-        title: 'Xenkit - Developer Tools for the Web',
+        siteName: 'Wuniverse',
+        title: 'Wuniverse - Memory Keeper of Friendship',
         description:
-            'Your ultimate toolkit with all the essential utilities for development, security and productivity in one place.',
+            'Tempat untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman. Simpan momen berharga dan jelajahi timeline pertemanan yang tak terlupakan.',
         images: [
             {
                 url: '/og-image.png',
                 width: 1200,
                 height: 630,
-                alt: 'Xenkit - Developer Tools for the Web'
+                alt: 'Wuniverse - Memory Keeper of Friendship'
             }
         ]
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Xenkit - Developer Tools for the Web',
+        title: 'Wuniverse - Memory Keeper of Friendship',
         description:
-            'Your ultimate toolkit with all the essential utilities for development, security and productivity in one place.',
+            'Tempat untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman. Simpan momen berharga dan jelajahi timeline pertemanan yang tak terlupakan.',
         images: ['/og-image.png'],
         creator: '@xenvoid404'
     },
@@ -109,7 +105,7 @@ export const metadata: Metadata = {
     other: {
         'apple-mobile-web-app-capable': 'yes',
         'apple-mobile-web-app-status-bar-style': 'default',
-        'apple-mobile-web-app-title': 'Xenkit',
+        'apple-mobile-web-app-title': 'Wuniverse',
         'google-site-verification': 'your-google-verification-code-here'
     }
 };
@@ -123,50 +119,50 @@ export default function RootLayout({
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'Xenkit',
+        name: 'Wuniverse',
         description:
-            'Modern toolkit for developers with essential utilities for development, security and productivity.',
+            'Platform untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman dengan fitur music player dan timeline pertemanan.',
         url: 'https://wuniverse.web.id',
         potentialAction: {
             '@type': 'SearchAction',
             target: {
                 '@type': 'EntryPoint',
                 urlTemplate:
-                    'https://wuniverse.web.id/tools?search={search_term_string}'
+                    'https://wuniverse.web.id/memories?search={search_term_string}'
             },
             'query-input': 'required name=search_term_string'
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Xenkit',
-            url: 'https://xenkit.com',
+            name: 'Wuniverse',
+            url: 'https://wuniverse.web.id',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://xenkit.com/logo.png'
+                url: 'https://wuniverse.web.id/logo.png'
             },
             sameAs: ['https://github.com/xenvoid404']
         },
         mainEntity: {
             '@type': 'ItemList',
-            name: 'Developer Tools',
+            name: 'Memory Collection',
             description:
-                'Collection of essential developer tools and utilities',
-            numberOfItems: 25,
+                'Koleksi kenangan dan foto-foto bersama teman',
+            numberOfItems: 0,
             itemListElement: [
                 {
-                    '@type': 'SoftwareApplication',
-                    name: 'Password Generator',
+                    '@type': 'CreativeWork',
+                    name: 'Memory Fragments',
                     description:
-                        'Generate secure, random passwords with customizable options',
-                    url: 'https://xenkit.com/tools/password-generator',
-                    applicationCategory: 'SecurityApplication'
+                        'Album foto kenangan bersama teman-teman',
+                    url: 'https://wuniverse.web.id/memories',
+                    genre: 'Photography'
                 }
             ]
         }
     };
 
     return (
-        <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+        <html lang="id" className="scroll-smooth" suppressHydrationWarning>
             <head>
                 <meta charSet="UTF-8" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -193,7 +189,7 @@ export default function RootLayout({
                 />
             </head>
             <body
-                className={`${figtree.variable} font-figtree antialiased bg-background text-foreground`}
+                className={`${rajdhani.variable} font-rajdhani antialiased bg-background text-foreground`}
             >
                 {/* Google Analytics */}
                 <Script

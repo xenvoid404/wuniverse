@@ -1,37 +1,41 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/sections/hero';
+import { MusicPlayer } from '@/components/sections/music-player';
+import { MemoryFragments } from '@/components/sections/memory-fragments';
+import { MemoryTimeline } from '@/components/sections/memory-timeline';
+import { FriendsNetwork } from '@/components/sections/friends-network';
 
 export const metadata: Metadata = {
-    title: 'Xenkit - Free Developer Tools & Utilities for Modern Development',
+    title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
     description:
-        'Boost your productivity with 25 free online developer tools. Password generators, UUID generators, Base64 encoders, JSON formatters, regex testers and more. No signup required.',
+        'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit, jelajahi album kenangan, dan telusuri timeline pertemanan yang tak terlupakan.',
     keywords: [
-        'free developer tools',
-        'online development utilities',
-        'password generator',
-        'uuid generator',
-        'base64 encoder decoder',
-        'json formatter',
-        'url encoder',
-        'regex tester',
-        'color picker',
-        'hash generator',
-        'developer productivity tools',
-        'coding utilities',
-        'web development tools',
-        'free online tools'
+        'kenangan teman',
+        'album foto',
+        'music player',
+        'timeline pertemanan',
+        'galeri foto',
+        'memory fragments',
+        'friendship memories',
+        'cyberpunk memories',
+        'foto lama',
+        'musik kenangan',
+        'friends network',
+        'wuniverse',
+        'memory keeper',
+        'nostalgia'
     ],
     openGraph: {
-        title: 'Xenkit - Free Developer Tools & Utilities for Modern Development',
+        title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
         description:
-            'Boost your productivity with 25 free online developer tools. No signup required.',
+            'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit dan jelajahi timeline pertemanan.',
         type: 'website',
         images: [
             {
                 url: '/og-image.png',
                 width: 1200,
                 height: 630,
-                alt: 'Xenkit Developer Tools Homepage'
+                alt: 'Wuniverse - Memory Keeper of Friendship'
             }
         ]
     }
@@ -41,20 +45,20 @@ export default function HomePage() {
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        name: 'Xenkit - Developer Tools for the Web',
+        name: 'Wuniverse - Memory Keeper of Friendship',
         description:
-            'Modern toolkit for developers with essential utilities for development, security and productivity.',
-        url: 'https://xenkit.com',
+            'Platform untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman dengan fitur music player dan timeline pertemanan.',
+        url: 'https://wuniverse.web.id',
         mainEntity: {
             '@type': 'Organization',
-            name: 'Xenkit',
-            url: 'https://xenkit.com',
+            name: 'Wuniverse',
+            url: 'https://wuniverse.web.id',
             description:
-                'Platform providing free online developer tools and utilities',
+                'Platform untuk menyimpan kenangan dan foto-foto bersama teman',
             foundingDate: '2024',
             contactPoint: {
                 '@type': 'ContactPoint',
-                contactType: 'Developer Support',
+                contactType: 'Support',
                 url: 'https://github.com/xenvoid404'
             }
         },
@@ -64,8 +68,8 @@ export default function HomePage() {
                 {
                     '@type': 'ListItem',
                     position: 1,
-                    name: 'Home',
-                    item: 'https://xenkit.com'
+                    name: 'Beranda',
+                    item: 'https://wuniverse.web.id'
                 }
             ]
         }
@@ -89,6 +93,18 @@ export default function HomePage() {
             <main id="main-content" className="flex flex-col">
                 {/* Hero Section */}
                 <Hero />
+                
+                {/* Music Player Section */}
+                <MusicPlayer />
+                
+                {/* Memory Fragments Section */}
+                <MemoryFragments />
+                
+                {/* Memory Timeline Section */}
+                <MemoryTimeline />
+                
+                {/* Friends Network Section */}
+                <FriendsNetwork />
             </main>
         </>
     );
