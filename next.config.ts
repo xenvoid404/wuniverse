@@ -1,7 +1,14 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-    // Options here
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'upload.wikimedia.org'
+            }
+        ]
+    }
 };
 
 export default nextConfig;
