@@ -15,12 +15,18 @@ export function Hero() {
             {/* Cyberpunk Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse" />
-                <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-magenta-500/10 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-                <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-bl from-yellow-500/5 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-                
+                <div
+                    className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-magenta-500/10 to-transparent rounded-full blur-3xl animate-pulse"
+                    style={{ animationDelay: '1s' }}
+                />
+                <div
+                    className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-bl from-yellow-500/5 to-transparent rounded-full blur-3xl animate-pulse"
+                    style={{ animationDelay: '2s' }}
+                />
+
                 {/* Grid overlay */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-                
+
                 {/* Scanning lines */}
                 <div className="absolute inset-0">
                     <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent animate-scan-line"></div>
@@ -30,18 +36,20 @@ export function Hero() {
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 sm:px-8 lg:px-12">
                 <div className="text-center space-y-12">
                     {/* Badge */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         className="inline-flex items-center gap-3 px-6 py-3 rounded-full cyberpunk-card backdrop-blur-sm neon-border"
                     >
                         <RiMemoriesLine className="w-4 h-4 neon-text" />
-                        <span className="text-sm font-medium">Memory Keeper of Friendship</span>
+                        <span className="text-sm font-medium">
+                            Memory Keeper of Friendship
+                        </span>
                     </motion.div>
 
                     {/* Main Heading */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -52,26 +60,28 @@ export function Hero() {
                             className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1]"
                         >
                             <span className="block mb-4">
-                                <span className="text-gradient-cyberpunk glitch" data-text="Wuniverse">
-                                    Wuniverse
+                                <span
+                                    className="text-gradient-cyberpunk glitch"
+                                    data-text="Echoes of"
+                                >
+                                    Echoes of
                                 </span>
                             </span>
                             <span className="block text-foreground">
-                                Kenangan Tak Terlupakan
+                                Forgotten Days
                             </span>
                         </h1>
 
                         <p className="max-w-3xl mx-auto text-lg sm:text-xl lg:text-2xl text-muted-foreground leading-relaxed font-light">
-                            Tempat untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman.
-                            <span className="neon-text font-medium block mt-2 sm:inline sm:mt-0">
-                                {' '}
-                                Simpan momen, dengarkan musik, jelajahi timeline pertemanan.
-                            </span>
+                            Mari kita buka kembali lembaran lama yang nyaris
+                            terlupakan. Temukan potongan kecil dari hidupmu
+                            karena di sinilah, kenangan itu masih menunggu untuk
+                            dikenang kembali.
                         </p>
                     </motion.div>
 
                     {/* Feature highlights */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
@@ -81,9 +91,7 @@ export function Hero() {
                             <div className="p-2 rounded-lg cyberpunk-card neon-border group-hover:shadow-neon transition-all duration-300">
                                 <FaMusic className="w-4 h-4 text-cyan-400" />
                             </div>
-                            <span className="font-medium">
-                                Music Player
-                            </span>
+                            <span className="font-medium">Music Player</span>
                         </div>
                         <div className="flex items-center gap-3 group">
                             <div className="p-2 rounded-lg cyberpunk-card neon-border group-hover:shadow-neon transition-all duration-300">
@@ -100,7 +108,7 @@ export function Hero() {
                     </motion.div>
 
                     {/* CTA Button */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.6 }}

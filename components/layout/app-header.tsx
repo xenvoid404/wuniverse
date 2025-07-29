@@ -16,10 +16,10 @@ export function AppHeader({ sidebarOpen }: { sidebarOpen: () => void }) {
                 <Link
                     href="/"
                     className="flex items-center space-x-2 group"
-                    aria-label="Xenkit - Go to homepage"
+                    aria-label="Wuniverse - Go to homepage"
                 >
                     <h1 className="text-2xl md:text-3xl font-bold text-gradient-primary group-hover:scale-105 transition-transform duration-300">
-                        Xenkit
+                        Wuniverse
                     </h1>
                 </Link>
 
