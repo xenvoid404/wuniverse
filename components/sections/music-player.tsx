@@ -41,7 +41,7 @@ export function MusicPlayer() {
         setCurrentTrack(track);
         setCurrentTime(0);
         if (audioRef.current) {
-            audioRef.current.src = `/soundtrack/${track.fileName}`;
+            audioRef.current.src = `/soundtracks/${track.fileName}`;
             if (isPlaying) {
                 audioRef.current.play();
             }
