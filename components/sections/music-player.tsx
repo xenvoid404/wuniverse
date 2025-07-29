@@ -1,8 +1,17 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlay, FaPause, FaStepForward, FaStepBackward, FaVolumeUp, FaRandom, FaRedo } from 'react-icons/fa';
+import {
+    FaPlay,
+    FaPause,
+    FaStepForward,
+    FaStepBackward,
+    FaVolumeUp,
+    FaRandom,
+    FaRedo
+} from 'react-icons/fa';
 import { soundtracks, type Soundtrack } from '@/data/soundtracks';
 
 export function MusicPlayer() {
@@ -14,12 +23,12 @@ export function MusicPlayer() {
     const [isShuffling, setIsShuffling] = useState(false);
     const [isRepeating, setIsRepeating] = useState(false);
     const [showPlaylist, setShowPlaylist] = useState(false);
-    
+
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const handlePlayPause = () => {
         if (!audioRef.current || !currentTrack) return;
-        
+
         if (isPlaying) {
             audioRef.current.pause();
         } else {
@@ -40,14 +49,19 @@ export function MusicPlayer() {
     };
 
     const handleNext = () => {
-        const currentIndex = soundtracks.findIndex(track => track.id === currentTrack?.id);
+        const currentIndex = soundtracks.findIndex(
+            track => track.id === currentTrack?.id
+        );
         const nextIndex = (currentIndex + 1) % soundtracks.length;
         handleTrackSelect(soundtracks[nextIndex]);
     };
 
     const handlePrevious = () => {
-        const currentIndex = soundtracks.findIndex(track => track.id === currentTrack?.id);
-        const previousIndex = currentIndex === 0 ? soundtracks.length - 1 : currentIndex - 1;
+        const currentIndex = soundtracks.findIndex(
+            track => track.id === currentTrack?.id
+        );
+        const previousIndex =
+            currentIndex === 0 ? soundtracks.length - 1 : currentIndex - 1;
         handleTrackSelect(soundtracks[previousIndex]);
     };
 
@@ -109,7 +123,10 @@ export function MusicPlayer() {
     };
 
     return (
-        <section id="music-player" className="py-20 px-6 sm:px-8 lg:px-12 cyberpunk-bg">
+        <section
+            id="music-player"
+            className="py-20 px-6 sm:px-8 lg:px-12 cyberpunk-bg"
+        >
             <div className="max-w-6xl mx-auto">
                 <motion.div
                     initial="hidden"
@@ -118,17 +135,20 @@ export function MusicPlayer() {
                     variants={containerVariants}
                     className="text-center mb-12"
                 >
-                    <motion.h2 
+                    <motion.h2
                         variants={itemVariants}
                         className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
                     >
-                        <span className="text-gradient-cyberpunk">Memory Soundtrack</span>
+                        <span className="text-gradient-cyberpunk">
+                            Memory Soundtrack
+                        </span>
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                         variants={itemVariants}
                         className="text-lg text-muted-foreground max-w-2xl mx-auto"
                     >
-                        Dengarkan musik yang mengiringi setiap momen kenangan bersama teman-teman
+                        Dengarkan musik yang mengiringi setiap momen kenangan
+                        bersama teman-teman
                     </motion.p>
                 </motion.div>
 
@@ -139,14 +159,14 @@ export function MusicPlayer() {
                     {/* Main Player */}
                     <div className="flex flex-col lg:flex-row items-center gap-8">
                         {/* Album Art */}
-                        <motion.div 
+                        <motion.div
                             variants={itemVariants}
                             className="relative"
                         >
                             <div className="w-48 h-48 rounded-xl overflow-hidden neon-border">
                                 {currentTrack?.cover ? (
-                                    <img 
-                                        src={currentTrack.cover} 
+                                    <Image
+                                        src={currentTrack.cover}
                                         alt={currentTrack.title}
                                         className="w-full h-full object-cover"
                                     />
@@ -156,7 +176,7 @@ export function MusicPlayer() {
                                     </div>
                                 )}
                             </div>
-                            
+
                             {/* Spinning animation when playing */}
                             <AnimatePresence>
                                 {isPlaying && (
@@ -164,8 +184,12 @@ export function MusicPlayer() {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1, rotate: 360 }}
                                         exit={{ opacity: 0 }}
-                                        transition={{ 
-                                            rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                                        transition={{
+                                            rotate: {
+                                                duration: 10,
+                                                repeat: Infinity,
+                                                ease: 'linear'
+                                            },
                                             opacity: { duration: 0.3 }
                                         }}
                                         className="absolute inset-0 border-4 border-cyan-500/30 rounded-xl"
@@ -177,7 +201,10 @@ export function MusicPlayer() {
                         {/* Player Controls */}
                         <div className="flex-1 space-y-6">
                             {/* Track Info */}
-                            <motion.div variants={itemVariants} className="text-center lg:text-left">
+                            <motion.div
+                                variants={itemVariants}
+                                className="text-center lg:text-left"
+                            >
                                 <h3 className="text-2xl font-bold text-gradient-cyberpunk mb-2">
                                     {currentTrack?.title || 'Select a track'}
                                 </h3>
@@ -186,20 +213,25 @@ export function MusicPlayer() {
                                 </p>
                                 {currentTrack?.memories && (
                                     <div className="mt-2 flex flex-wrap gap-2 justify-center lg:justify-start">
-                                        {currentTrack.memories.map((memory, index) => (
-                                            <span 
-                                                key={index}
-                                                className="px-2 py-1 text-xs rounded-full cyberpunk-card neon-border"
-                                            >
-                                                {memory}
-                                            </span>
-                                        ))}
+                                        {currentTrack.memories.map(
+                                            (memory, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="px-2 py-1 text-xs rounded-full cyberpunk-card neon-border"
+                                                >
+                                                    {memory}
+                                                </span>
+                                            )
+                                        )}
                                     </div>
                                 )}
                             </motion.div>
 
                             {/* Progress Bar */}
-                            <motion.div variants={itemVariants} className="space-y-2">
+                            <motion.div
+                                variants={itemVariants}
+                                className="space-y-2"
+                            >
                                 <div className="flex justify-between text-sm text-muted-foreground">
                                     <span>{formatTime(currentTime)}</span>
                                     <span>{formatTime(duration)}</span>
@@ -215,23 +247,28 @@ export function MusicPlayer() {
                             </motion.div>
 
                             {/* Controls */}
-                            <motion.div variants={itemVariants} className="flex items-center justify-center gap-4">
+                            <motion.div
+                                variants={itemVariants}
+                                className="flex items-center justify-center gap-4"
+                            >
                                 <button
                                     onClick={() => setIsShuffling(!isShuffling)}
                                     className={`p-3 rounded-lg transition-all duration-300 ${
-                                        isShuffling ? 'neon-border shadow-neon' : 'cyberpunk-card'
+                                        isShuffling
+                                            ? 'neon-border shadow-neon'
+                                            : 'cyberpunk-card'
                                     }`}
                                 >
                                     <FaRandom className="w-4 h-4" />
                                 </button>
-                                
+
                                 <button
                                     onClick={handlePrevious}
                                     className="p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300"
                                 >
                                     <FaStepBackward className="w-5 h-5" />
                                 </button>
-                                
+
                                 <button
                                     onClick={handlePlayPause}
                                     className="p-4 rounded-full neon-border hover:shadow-neon transition-all duration-300"
@@ -242,18 +279,20 @@ export function MusicPlayer() {
                                         <FaPlay className="w-6 h-6 neon-text" />
                                     )}
                                 </button>
-                                
+
                                 <button
                                     onClick={handleNext}
                                     className="p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300"
                                 >
                                     <FaStepForward className="w-5 h-5" />
                                 </button>
-                                
+
                                 <button
                                     onClick={() => setIsRepeating(!isRepeating)}
                                     className={`p-3 rounded-lg transition-all duration-300 ${
-                                        isRepeating ? 'neon-border shadow-neon' : 'cyberpunk-card'
+                                        isRepeating
+                                            ? 'neon-border shadow-neon'
+                                            : 'cyberpunk-card'
                                     }`}
                                 >
                                     <FaRedo className="w-4 h-4" />
@@ -261,7 +300,10 @@ export function MusicPlayer() {
                             </motion.div>
 
                             {/* Volume Control */}
-                            <motion.div variants={itemVariants} className="flex items-center gap-3">
+                            <motion.div
+                                variants={itemVariants}
+                                className="flex items-center gap-3"
+                            >
                                 <FaVolumeUp className="w-4 h-4 text-muted-foreground" />
                                 <input
                                     type="range"
@@ -277,7 +319,10 @@ export function MusicPlayer() {
                     </div>
 
                     {/* Playlist Toggle */}
-                    <motion.div variants={itemVariants} className="mt-8 text-center">
+                    <motion.div
+                        variants={itemVariants}
+                        className="mt-8 text-center"
+                    >
                         <button
                             onClick={() => setShowPlaylist(!showPlaylist)}
                             className="px-6 py-2 cyberpunk-card neon-border rounded-lg hover:shadow-neon transition-all duration-300"
@@ -303,19 +348,27 @@ export function MusicPlayer() {
                                             initial={{ opacity: 0, x: -20 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.1 }}
-                                            onClick={() => handleTrackSelect(track)}
+                                            onClick={() =>
+                                                handleTrackSelect(track)
+                                            }
                                             className={`w-full p-4 rounded-lg text-left transition-all duration-300 ${
-                                                currentTrack?.id === track.id 
-                                                    ? 'neon-border shadow-neon' 
+                                                currentTrack?.id === track.id
+                                                    ? 'neon-border shadow-neon'
                                                     : 'cyberpunk-card hover:shadow-neon'
                                             }`}
                                         >
                                             <div className="flex items-center justify-between">
                                                 <div>
-                                                    <h4 className="font-medium">{track.title}</h4>
-                                                    <p className="text-sm text-muted-foreground">{track.artist}</p>
+                                                    <h4 className="font-medium">
+                                                        {track.title}
+                                                    </h4>
+                                                    <p className="text-sm text-muted-foreground">
+                                                        {track.artist}
+                                                    </p>
                                                 </div>
-                                                <span className="text-sm text-muted-foreground">{track.duration}</span>
+                                                <span className="text-sm text-muted-foreground">
+                                                    {track.duration}
+                                                </span>
                                             </div>
                                         </motion.button>
                                     ))}
