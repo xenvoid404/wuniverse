@@ -1,19 +1,10 @@
 'use client';
-import {
-    type ReactNode,
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    useCallback
-} from 'react';
-
-type Theme = 'light' | 'dark' | 'system';
+import { type ReactNode, createContext, useContext, useEffect } from 'react';
 
 interface ThemeContextType {
-    theme: Theme;
-    resolvedTheme: 'light' | 'dark';
-    setTheme: (theme: Theme) => void;
+    theme: 'dark';
+    resolvedTheme: 'dark';
+    setTheme: () => void;
     toggleTheme: () => void;
     isLoading: boolean;
 }
@@ -23,90 +14,20 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const themeScript = `
 (function() {
   try {
-    var theme = localStorage.getItem('theme') || 'system';
-    var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    document.documentElement.classList.add(isDark ? 'dark' : 'light');
-    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    document.documentElement.classList.add('dark');
+    document.documentElement.style.colorScheme = 'dark';
   } catch (e) {}
 })();
 `;
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setThemeState] = useState<Theme>('system');
-    const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(
-        'dark'
-    );
-    const [isLoading, setIsLoading] = useState(true);
-
-    const updateTheme = useCallback((newTheme: Theme) => {
-        const root = document.documentElement;
-        root.classList.remove('light', 'dark');
-
-        let newResolvedTheme: 'light' | 'dark';
-
-        if (newTheme === 'system') {
-            const systemPreference = window.matchMedia(
-                '(prefers-color-scheme: dark)'
-            ).matches
-                ? 'dark'
-                : 'light';
-            newResolvedTheme = systemPreference;
-        } else {
-            newResolvedTheme = newTheme;
-        }
-
-        root.classList.add(newResolvedTheme);
-        root.style.colorScheme = newResolvedTheme;
-        setResolvedTheme(newResolvedTheme);
-
-        try {
-            localStorage.setItem('theme', newTheme);
-        } catch (e) {
-            console.warn('Failed to save theme preference:', e);
-        }
-    }, []);
-
-    useEffect(() => {
-        try {
-            const savedTheme =
-                (localStorage.getItem('theme') as Theme) || 'system';
-            setThemeState(savedTheme);
-            updateTheme(savedTheme);
-        } catch (e) {
-            setThemeState('system');
-            updateTheme('system');
-        }
-        setIsLoading(false);
-    }, [updateTheme]);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const handleChange = () => {
-            if (theme === 'system') {
-                updateTheme('system');
-            }
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, [theme, updateTheme]);
-
-    const setTheme = useCallback(
-        (newTheme: Theme) => {
-            setThemeState(newTheme);
-            updateTheme(newTheme);
-        },
-        [updateTheme]
-    );
-
-    const toggleTheme = useCallback(() => {
-        const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-    }, [resolvedTheme, setTheme]);
-
     useEffect(() => {
         if (typeof document !== 'undefined') {
+            const root = document.documentElement;
+            root.classList.remove('light');
+            root.classList.add('dark');
+            root.style.colorScheme = 'dark';
+            
             const existingScript = document.getElementById('theme-script');
             if (!existingScript) {
                 const script = document.createElement('script');
@@ -118,11 +39,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const contextValue: ThemeContextType = {
-        theme,
-        resolvedTheme,
-        setTheme,
-        toggleTheme,
-        isLoading
+        theme: 'dark',
+        resolvedTheme: 'dark',
+        setTheme: () => {}, // No-op since we only support dark theme
+        toggleTheme: () => {}, // No-op since we only support dark theme
+        isLoading: false
     };
 
     return (

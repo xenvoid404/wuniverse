@@ -1,14 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { albums, type Album } from '@/data/albums';
-import { usePhotoModal, useAlbumState } from '@/hooks';
+import { usePhotoModal } from '@/hooks';
 import { ANIMATION_VARIANTS } from '@/constants/animations';
-import { AlbumCard, PhotoModal } from '@/components/memory-fragments';
+import { AlbumCard, PhotoModal, AlbumDetailsModal } from '@/components/memory-fragments';
 
 export function MemoryFragments() {
-    const albumState = useAlbumState();
+    const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
     const photoModal = usePhotoModal(albums);
+
+    const handleAlbumSelect = (album: Album) => {
+        setSelectedAlbum(album);
+    };
+
+    const handleCloseAlbumModal = () => {
+        setSelectedAlbum(null);
+    };
 
     const handlePhotoSelect = (photo: typeof albums[0]['photos'][0], album: Album) => {
         photoModal.openPhotoModal(photo, album);
@@ -32,7 +41,7 @@ export function MemoryFragments() {
                     </h2>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                         Koleksi album foto kenangan yang menyimpan setiap momen
-                        berharga bersama teman-teman
+                        berharga bersama teman-teman. Klik album untuk melihat detail lengkap.
                     </p>
                 </motion.div>
 
@@ -42,19 +51,28 @@ export function MemoryFragments() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     {albums.map(album => (
                         <AlbumCard
                             key={album.id}
                             album={album}
-                            isExpanded={albumState.isAlbumExpanded(album.id)}
-                            onToggle={() => albumState.handleAlbumToggle(album.id)}
-                            onPhotoSelect={(photo) => handlePhotoSelect(photo, album)}
+                            onViewDetails={handleAlbumSelect}
                             variants={ANIMATION_VARIANTS.album}
                         />
                     ))}
                 </motion.div>
+
+                {/* Album Details Modal */}
+                <AnimatePresence>
+                    {selectedAlbum && (
+                        <AlbumDetailsModal
+                            album={selectedAlbum}
+                            onClose={handleCloseAlbumModal}
+                            onPhotoSelect={(photo) => handlePhotoSelect(photo, selectedAlbum)}
+                        />
+                    )}
+                </AnimatePresence>
 
                 {/* Photo Modal */}
                 <AnimatePresence>
