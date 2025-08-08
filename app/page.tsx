@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/sections/hero';
 import { MemoryFragments } from '@/components/sections/memory-fragments';
+import { MusicPlayer } from '@/components/sections/music-player';
 
 export const metadata: Metadata = {
     title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
@@ -92,6 +93,9 @@ export default function HomePage() {
 
                 {/* Memory Fragments Section */}
                 <MemoryFragments />
+                
+                {/* Soundtrack Section */}
+                <MusicPlayer />
             </main>
         </>
     );
