@@ -81,12 +81,13 @@ export function AlbumCard({
                     <div className="flex items-center gap-2 mb-3">
                         <span className="text-xs text-muted-foreground">With:</span>
                         <div className="flex -space-x-2">
-                            {album.friends.slice(0, 3).map((friend, index) => (
+                            {album.friends.slice(0, 3).map((friend) => (
                                 <div
-                                    key={index}
+                                    key={friend.id}
                                     className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border-2 border-background flex items-center justify-center text-xs font-bold"
+                                    title={friend.name}
                                 >
-                                    {friend.charAt(0)}
+                                    {friend.name.charAt(0).toUpperCase()}
                                 </div>
                             ))}
                             {album.friends.length > 3 && (

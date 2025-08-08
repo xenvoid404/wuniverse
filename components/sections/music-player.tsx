@@ -153,11 +153,7 @@ export function MusicPlayer() {
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    const getVolumeIcon = () => {
-        if (volume === 0) return FaVolumeMute;
-        if (volume < 0.5) return FaVolumeDown;
-        return FaVolumeUp;
-    };
+
 
     // Memoize volume icon to prevent unnecessary re-renders
     const VolumeIcon = useMemo(() => {

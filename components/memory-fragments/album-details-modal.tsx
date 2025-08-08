@@ -150,16 +150,16 @@ export function AlbumDetailsModal({
                                     <div className="flex flex-wrap gap-3">
                                         {album.friends.map((friend, index) => (
                                             <motion.div
-                                                key={index}
+                                                key={friend.id}
                                                 initial={{ scale: 0, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
                                                 transition={{ delay: 0.6 + index * 0.1 }}
                                                 className="flex items-center gap-3 px-4 py-2 cyberpunk-card rounded-full hover:shadow-neon transition-all duration-300"
                                             >
                                                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-magenta-500 flex items-center justify-center text-sm font-bold">
-                                                    {friend.charAt(0)}
+                                                    {friend.name.charAt(0).toUpperCase()}
                                                 </div>
-                                                <span className="font-medium">{friend}</span>
+                                                <span className="font-medium">{friend.name}</span>
                                             </motion.div>
                                         ))}
                                     </div>
