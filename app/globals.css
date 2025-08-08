@@ -97,6 +97,8 @@ html {
     text-rendering: optimizeLegibility;
     font-feature-settings: 'cv11', 'ss01';
     font-variant-numeric: oldstyle-nums;
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
 }
 
 body {
@@ -109,6 +111,64 @@ body {
     overflow-x: hidden;
     transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
                 color var(--theme-transition-duration) var(--theme-transition-timing);
+    /* Improve touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Touch optimization */
+.touch-manipulation {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Improve tap response on mobile */
+button, a, [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 255, 255, 0.1);
+}
+
+/* Better focus for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    button:hover,
+    a:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    button:active,
+    a:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Ensure minimum touch target size on mobile */
+@media (max-width: 768px) {
+    button, a, input[type="range"] {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Prevent zoom on input focus on iOS */
+    input, textarea, select {
+        font-size: 16px;
+    }
+}
+
+/* Prevent overscroll bounce on iOS */
+.prevent-overscroll {
+    overscroll-behavior: none;
+    -webkit-overscroll-behavior: none;
+}
+
+/* Full viewport height that accounts for mobile browser UI */
+.min-h-screen-mobile {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for better mobile support */
 }
 
 /* Remove focus outline for mouse users but keep for keyboard users */

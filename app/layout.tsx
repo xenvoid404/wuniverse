@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { type ReactNode } from 'react';
 import { Rajdhani } from 'next/font/google';
 import Script from 'next/script';
-import { ThemeProvider } from '@/contexts/theme-provider';
 import AppLayout from '@/layouts/app-layout';
 import './globals.css';
 
@@ -159,7 +158,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="id" className="scroll-smooth" suppressHydrationWarning>
+        <html lang="id" className="scroll-smooth dark" suppressHydrationWarning>
             <head>
                 <meta charSet="UTF-8" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -202,9 +201,7 @@ export default function RootLayout({
                     `}
                 </Script>
 
-                <ThemeProvider>
-                    <AppLayout>{children}</AppLayout>
-                </ThemeProvider>
+                <AppLayout>{children}</AppLayout>
             </body>
         </html>
     );

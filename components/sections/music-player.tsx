@@ -129,6 +129,20 @@ export function MusicPlayer() {
         }
     }, []);
 
+    const handleMute = useCallback(() => {
+        if (volume === 0) {
+            setVolume(0.7);
+            if (audioRef.current) {
+                audioRef.current.volume = 0.7;
+            }
+        } else {
+            setVolume(0);
+            if (audioRef.current) {
+                audioRef.current.volume = 0;
+            }
+        }
+    }, [volume]);
+
     const handleEnded = useCallback(() => {
         if (isRepeating) {
             if (audioRef.current) {
@@ -244,39 +258,39 @@ export function MusicPlayer() {
 
                 <motion.div
                     variants={containerVariants}
-                    className="cyberpunk-card p-8 rounded-2xl backdrop-blur-sm max-w-4xl mx-auto"
+                    className="cyberpunk-card p-4 sm:p-6 lg:p-8 rounded-2xl backdrop-blur-sm max-w-4xl mx-auto"
                 >
                     {/* Error Message */}
                     {error && (
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center"
+                            className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center text-sm sm:text-base"
                         >
                             {error}
                         </motion.div>
                     )}
 
                     {/* Main Player */}
-                    <div className="flex flex-col lg:flex-row items-center gap-8">
+                    <div className="flex flex-col items-center gap-6 sm:gap-8">
                         {/* Album Art */}
                         <motion.div
                             variants={itemVariants}
                             className="relative"
                         >
-                            <div className="w-48 h-48 rounded-xl overflow-hidden neon-border">
+                            <div className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-xl overflow-hidden neon-border">
                                 {currentTrack?.cover ? (
                                     <Image
                                         src={currentTrack.cover}
                                         alt={currentTrack.title}
-                                        width={192}
-                                        height={192}
+                                        width={224}
+                                        height={224}
                                         className="w-full h-full object-cover"
                                         unoptimized
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-gradient-to-br from-cyan-500/20 to-magenta-500/20 flex items-center justify-center">
-                                        <FaPlay className="text-4xl neon-text" />
+                                        <FaPlay className="text-3xl sm:text-4xl neon-text" />
                                     </div>
                                 )}
                             </div>
@@ -288,7 +302,7 @@ export function MusicPlayer() {
                                     animate={{ opacity: 1 }}
                                     className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center"
                                 >
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+                                    <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-cyan-500"></div>
                                 </motion.div>
                             )}
 
@@ -314,20 +328,20 @@ export function MusicPlayer() {
                         </motion.div>
 
                         {/* Player Controls */}
-                        <div className="flex-1 space-y-6">
+                        <div className="w-full space-y-4 sm:space-y-6">
                             {/* Track Info */}
                             <motion.div
                                 variants={itemVariants}
-                                className="text-center lg:text-left"
+                                className="text-center"
                             >
-                                <h3 className="text-2xl font-bold text-gradient-cyberpunk mb-2">
+                                <h3 className="text-xl sm:text-2xl font-bold text-gradient-cyberpunk mb-2">
                                     {currentTrack?.title || 'Select a track'}
                                 </h3>
-                                <p className="text-muted-foreground">
+                                <p className="text-muted-foreground text-sm sm:text-base">
                                     {currentTrack?.artist || 'Unknown Artist'}
                                 </p>
                                 {currentTrack?.memories && (
-                                    <div className="mt-2 flex flex-wrap gap-2 justify-center lg:justify-start">
+                                    <div className="mt-2 flex flex-wrap gap-2 justify-center">
                                         {currentTrack.memories.map(
                                             (memory, index) => (
                                                 <span
@@ -347,7 +361,7 @@ export function MusicPlayer() {
                                 variants={itemVariants}
                                 className="space-y-2"
                             >
-                                <div className="flex justify-between text-sm text-muted-foreground">
+                                <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
                                     <span>{formatTime(currentTime)}</span>
                                     <span>{formatTime(duration)}</span>
                                 </div>
@@ -365,68 +379,80 @@ export function MusicPlayer() {
                             {/* Controls */}
                             <motion.div
                                 variants={itemVariants}
-                                className="flex items-center justify-center gap-4"
+                                className="flex items-center justify-center gap-3 sm:gap-4"
                             >
                                 <button
                                     onClick={() => setIsShuffling(!isShuffling)}
                                     disabled={soundtracks.length <= 1}
-                                    className={`p-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                    className={`p-2 sm:p-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation ${
                                         isShuffling
                                             ? 'neon-border shadow-neon'
                                             : 'cyberpunk-card hover:shadow-neon'
                                     }`}
                                 >
-                                    <FaRandom className="w-4 h-4" />
+                                    <FaRandom className="w-3 h-3 sm:w-4 sm:h-4" />
                                 </button>
 
                                 <button
                                     onClick={handlePrevious}
                                     disabled={soundtracks.length <= 1 || isLoading}
-                                    className="p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="p-2 sm:p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                                 >
-                                    <FaStepBackward className="w-5 h-5" />
+                                    <FaStepBackward className="w-4 h-4 sm:w-5 sm:h-5" />
                                 </button>
 
                                 <button
                                     onClick={handlePlayPause}
                                     disabled={!currentTrack || isLoading}
-                                    className="p-4 rounded-full neon-border hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="p-3 sm:p-4 rounded-full neon-border hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                                 >
                                     {isLoading ? (
-                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-500"></div>
+                                        <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-cyan-500"></div>
                                     ) : isPlaying ? (
-                                        <FaPause className="w-6 h-6 neon-text" />
+                                        <FaPause className="w-5 h-5 sm:w-6 sm:h-6 neon-text" />
                                     ) : (
-                                        <FaPlay className="w-6 h-6 neon-text" />
+                                        <FaPlay className="w-5 h-5 sm:w-6 sm:h-6 neon-text" />
                                     )}
                                 </button>
 
                                 <button
                                     onClick={handleNext}
                                     disabled={soundtracks.length <= 1 || isLoading}
-                                    className="p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="p-2 sm:p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                                 >
-                                    <FaStepForward className="w-5 h-5" />
+                                    <FaStepForward className="w-4 h-4 sm:w-5 sm:h-5" />
                                 </button>
 
                                 <button
                                     onClick={() => setIsRepeating(!isRepeating)}
-                                    className={`p-3 rounded-lg transition-all duration-300 ${
+                                    disabled={!currentTrack}
+                                    className={`p-2 sm:p-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation ${
                                         isRepeating
                                             ? 'neon-border shadow-neon'
                                             : 'cyberpunk-card hover:shadow-neon'
                                     }`}
                                 >
-                                    <FaRedo className="w-4 h-4" />
+                                    <FaRedo className="w-3 h-3 sm:w-4 sm:h-4" />
                                 </button>
                             </motion.div>
 
                             {/* Volume Control */}
                             <motion.div
                                 variants={itemVariants}
-                                className="flex items-center gap-3"
+                                className="flex items-center gap-3 sm:gap-4"
                             >
-                                <VolumeIcon className="w-4 h-4 text-muted-foreground" />
+                                <button
+                                    onClick={() => setVolume(0)}
+                                    className="p-2 sm:p-3 rounded-lg cyberpunk-card hover:shadow-neon transition-all duration-300 touch-manipulation"
+                                >
+                                    {volume === 0 ? (
+                                        <FaVolumeMute className="w-4 h-4 sm:w-5 sm:h-5" />
+                                    ) : volume < 0.5 ? (
+                                        <FaVolumeDown className="w-4 h-4 sm:w-5 sm:h-5" />
+                                    ) : (
+                                        <FaVolumeUp className="w-4 h-4 sm:w-5 sm:h-5" />
+                                    )}
+                                </button>
                                 <input
                                     type="range"
                                     min="0"
@@ -436,21 +462,21 @@ export function MusicPlayer() {
                                     onChange={handleVolumeChange}
                                     className="flex-1 h-2 bg-muted rounded-lg appearance-none cursor-pointer slider"
                                 />
-                                <span className="text-sm text-muted-foreground min-w-[3rem]">
+                                <span className="text-xs sm:text-sm text-muted-foreground w-10 text-center">
                                     {Math.round(volume * 100)}%
                                 </span>
                             </motion.div>
                         </div>
                     </div>
 
-                    {/* Playlist Toggle */}
+                    {/* Show Playlist Button */}
                     <motion.div
                         variants={itemVariants}
-                        className="mt-8 text-center"
+                        className="flex justify-center mt-6 sm:mt-8"
                     >
                         <button
                             onClick={() => setShowPlaylist(!showPlaylist)}
-                            className="px-6 py-2 cyberpunk-card neon-border rounded-lg hover:shadow-neon transition-all duration-300"
+                            className="px-4 sm:px-6 py-2 sm:py-3 cyberpunk-card neon-border rounded-lg hover:shadow-neon transition-all duration-300 text-sm sm:text-base touch-manipulation"
                         >
                             {showPlaylist ? 'Hide Playlist' : 'Show Playlist'}
                         </button>
@@ -464,7 +490,7 @@ export function MusicPlayer() {
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className="mt-6 overflow-hidden"
+                                className="mt-4 sm:mt-6 overflow-hidden"
                             >
                                 <div className="space-y-2">
                                     {soundtracks.map((track, index) => (
@@ -475,23 +501,23 @@ export function MusicPlayer() {
                                             transition={{ delay: index * 0.1 }}
                                             onClick={() => handleTrackSelect(track)}
                                             disabled={isLoading}
-                                            className={`w-full p-4 rounded-lg text-left transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            className={`w-full p-3 sm:p-4 rounded-lg text-left transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation ${
                                                 currentTrack?.id === track.id
                                                     ? 'neon-border shadow-neon'
                                                     : 'cyberpunk-card hover:shadow-neon'
                                             }`}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <div>
-                                                    <h4 className="font-medium">
+                                                <div className="min-w-0 flex-1">
+                                                    <h4 className="font-medium text-sm sm:text-base truncate">
                                                         {track.title}
                                                     </h4>
-                                                    <p className="text-sm text-muted-foreground">
+                                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">
                                                         {track.artist}
                                                     </p>
                                                 </div>
-                                                <div className="text-right">
-                                                    <span className="text-sm text-muted-foreground">
+                                                <div className="text-right ml-2">
+                                                    <span className="text-xs sm:text-sm text-muted-foreground">
                                                         {track.duration}
                                                     </span>
                                                     {currentTrack?.id === track.id && (

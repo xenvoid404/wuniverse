@@ -8,7 +8,7 @@ import { RiMemoriesLine } from 'react-icons/ri';
 export function Hero() {
     return (
         <section
-            className="relative min-h-screen flex items-center justify-center overflow-hidden cyberpunk-bg"
+            className="relative min-h-screen-mobile flex items-center justify-center overflow-hidden cyberpunk-bg prevent-overscroll"
             aria-labelledby="hero-heading"
         >
             {/* Cyberpunk Background Effects */}
@@ -132,26 +132,26 @@ export function Hero() {
                     >
                         <Link href="#memory-fragments">
                             <motion.button 
-                                className="group relative inline-flex items-center gap-3 px-8 py-4 cyberpunk-card neon-border font-semibold rounded-xl hover:shadow-neon hover:-translate-y-1 hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden"
+                                className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 cyberpunk-card neon-border font-semibold rounded-xl hover:shadow-neon hover:-translate-y-1 hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden touch-manipulation min-h-[48px] w-full sm:w-auto"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <span className="relative z-10 text-gradient-cyberpunk">
                                     Jelajahi Album
                                 </span>
-                                <FaImages className="w-5 h-5 neon-text transition-transform duration-300 group-hover:translate-x-1" />
+                                <FaImages className="w-4 h-4 sm:w-5 sm:h-5 neon-text transition-transform duration-300 group-hover:translate-x-1" />
                             </motion.button>
                         </Link>
                         <Link href="#music-player">
                             <motion.button 
-                                className="group relative inline-flex items-center gap-3 px-8 py-4 cyberpunk-card border border-muted-foreground/30 font-semibold rounded-xl hover:border-cyan-500/50 hover:shadow-neon hover:-translate-y-1 hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden"
+                                className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 cyberpunk-card border border-muted-foreground/30 font-semibold rounded-xl hover:border-cyan-500/50 hover:shadow-neon hover:-translate-y-1 hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden touch-manipulation min-h-[48px] w-full sm:w-auto"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <span className="relative z-10">
                                     Dengarkan Musik
                                 </span>
-                                <FaMusic className="w-5 h-5 text-cyan-400 transition-transform duration-300 group-hover:translate-x-1" />
+                                <FaMusic className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 transition-transform duration-300 group-hover:translate-x-1" />
                             </motion.button>
                         </Link>
                     </motion.div>

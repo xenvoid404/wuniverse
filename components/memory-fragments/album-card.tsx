@@ -19,7 +19,7 @@ export function AlbumCard({
     return (
         <motion.div
             variants={variants}
-            className="cyberpunk-card rounded-2xl overflow-hidden backdrop-blur-sm group cursor-pointer"
+            className="cyberpunk-card rounded-2xl overflow-hidden backdrop-blur-sm group cursor-pointer touch-manipulation"
             onClick={() => onViewDetails(album)}
         >
             {/* Album Cover */}

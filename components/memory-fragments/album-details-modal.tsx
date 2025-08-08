@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaCalendarAlt, FaUsers, FaTag } from 'react-icons/fa';
+import { FaTimes, FaChevronLeft, FaChevronRight, FaExpand, FaCompress } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import { type Album, type Photo } from '@/data/albums';
-import { PhotoGrid } from './photo-grid';
 
 interface AlbumDetailsModalProps {
     album: Album | null;
@@ -17,12 +17,54 @@ export function AlbumDetailsModal({
     onClose, 
     onPhotoSelect 
 }: AlbumDetailsModalProps) {
+    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    
+    useEffect(() => {
+        // Prevent background scroll when modal is open
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
     if (!album) return null;
+
+    const currentPhoto = album.photos[currentPhotoIndex];
+    const canGoToPrevious = currentPhotoIndex > 0;
+    const canGoToNext = currentPhotoIndex < album.photos.length - 1;
 
     const handleBackdropClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
+    };
+
+    const handlePreviousPhoto = () => {
+        if (canGoToPrevious) {
+            setCurrentPhotoIndex(currentPhotoIndex - 1);
+        }
+    };
+
+    const handleNextPhoto = () => {
+        if (canGoToNext) {
+            setCurrentPhotoIndex(currentPhotoIndex + 1);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+        if (e.key === 'ArrowLeft') handlePreviousPhoto();
+        if (e.key === 'ArrowRight') handleNextPhoto();
+        if (e.key === 'f' || e.key === 'F') setIsFullscreen(!isFullscreen);
+    };
+
+    const toggleFullscreen = () => {
+        setIsFullscreen(!isFullscreen);
+    };
+
+    const handlePhotoClick = () => {
+        onPhotoSelect(currentPhoto);
     };
 
     return (
@@ -31,183 +73,160 @@ export function AlbumDetailsModal({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md"
                 onClick={handleBackdropClick}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
             >
                 <motion.div
-                    initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                    transition={{ 
-                        type: "spring", 
-                        damping: 25, 
-                        stiffness: 300,
-                        duration: 0.5 
-                    }}
-                    className="relative max-w-6xl w-full max-h-[90vh] cyberpunk-card rounded-2xl overflow-hidden backdrop-blur-sm"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    className={`relative w-full h-full flex flex-col ${
+                        isFullscreen 
+                            ? 'bg-black' 
+                            : 'p-2 sm:p-4 md:p-6'
+                    }`}
                     onClick={e => e.stopPropagation()}
                 >
-                    {/* Close Button */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 z-10 p-3 rounded-full cyberpunk-card neon-border hover:shadow-neon transition-all duration-300 group"
-                    >
-                        <FaTimes className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-                    </button>
-
-                    <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
-                        {/* Header with Cover Image */}
-                        <div className="relative h-64 md:h-80 overflow-hidden">
-                            <Image
-                                src={album.coverPhoto}
-                                alt={album.title}
-                                fill
-                                sizes="100vw"
-                                className="object-cover"
-                                priority
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                            
-                            {/* Floating particles effect */}
-                            <div className="absolute inset-0">
-                                {[...Array(20)].map((_, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="absolute w-1 h-1 bg-cyan-400 rounded-full"
-                                        style={{
-                                            left: `${Math.random() * 100}%`,
-                                            top: `${Math.random() * 100}%`,
-                                        }}
-                                        animate={{
-                                            y: [-10, -20, -10],
-                                            opacity: [0.3, 1, 0.3],
-                                        }}
-                                        transition={{
-                                            duration: 3 + Math.random() * 2,
-                                            repeat: Infinity,
-                                            delay: Math.random() * 2,
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                            
-                            <div className="absolute bottom-6 left-6 right-6">
-                                <motion.h2 
-                                    initial={{ y: 30, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                    className="text-3xl md:text-4xl font-bold text-gradient-cyberpunk mb-3"
-                                >
-                                    {album.title}
-                                </motion.h2>
-                                <motion.div 
-                                    initial={{ y: 20, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.3 }}
-                                    className="flex items-center gap-6 text-gray-300"
-                                >
-                                    <span className="flex items-center gap-2">
-                                        <FaCalendarAlt className="w-4 h-4" />
-                                        {album.year}
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <FaUsers className="w-4 h-4" />
-                                        {album.photos.length} photos
-                                    </span>
-                                </motion.div>
-                            </div>
+                    {/* Header with controls */}
+                    <div className={`relative z-10 flex items-center justify-between ${
+                        isFullscreen ? 'absolute top-4 left-4 right-4' : 'mb-2 sm:mb-4'
+                    }`}>
+                        {/* Left controls */}
+                        <div className="flex items-center gap-2">
+                            {/* Navigation arrows */}
+                            <button
+                                onClick={handlePreviousPhoto}
+                                disabled={!canGoToPrevious}
+                                className={`p-2 sm:p-3 rounded-full cyberpunk-card transition-all duration-300 ${
+                                    canGoToPrevious 
+                                        ? 'neon-border hover:shadow-neon' 
+                                        : 'opacity-50 cursor-not-allowed'
+                                }`}
+                                aria-label="Previous photo"
+                            >
+                                <FaChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </button>
+                            <button
+                                onClick={handleNextPhoto}
+                                disabled={!canGoToNext}
+                                className={`p-2 sm:p-3 rounded-full cyberpunk-card transition-all duration-300 ${
+                                    canGoToNext 
+                                        ? 'neon-border hover:shadow-neon' 
+                                        : 'opacity-50 cursor-not-allowed'
+                                }`}
+                                aria-label="Next photo"
+                            >
+                                <FaChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                            </button>
                         </div>
 
-                        <div className="p-6 md:p-8">
-                            {/* Description */}
-                            <motion.div
-                                initial={{ y: 30, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="mb-8"
-                            >
-                                <h3 className="text-xl font-bold mb-3 text-gradient-cyberpunk">
-                                    About this Album
-                                </h3>
-                                <p className="text-muted-foreground leading-relaxed text-lg">
-                                    {album.description}
+                        {/* Center info - only show when not fullscreen */}
+                        {!isFullscreen && (
+                            <div className="flex-1 text-center mx-4">
+                                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gradient-cyberpunk truncate">
+                                    {album.title}
+                                </h2>
+                                <p className="text-sm text-muted-foreground">
+                                    {album.year} • {currentPhotoIndex + 1} of {album.photos.length}
                                 </p>
-                            </motion.div>
+                            </div>
+                        )}
 
-                            {/* Friends Section */}
-                            {album.friends && album.friends.length > 0 && (
-                                <motion.div
-                                    initial={{ y: 30, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="mb-8"
-                                >
-                                    <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                        <FaUsers className="w-5 h-5 text-cyan-400" />
-                                        <span className="text-gradient-cyberpunk">Friends in this Album</span>
-                                    </h3>
-                                    <div className="flex flex-wrap gap-3">
-                                        {album.friends.map((friend, index) => (
-                                            <motion.div
-                                                key={friend.id}
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                transition={{ delay: 0.6 + index * 0.1 }}
-                                                className="flex items-center gap-3 px-4 py-2 cyberpunk-card rounded-full hover:shadow-neon transition-all duration-300"
-                                            >
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-magenta-500 flex items-center justify-center text-sm font-bold">
-                                                    {friend.name.charAt(0).toUpperCase()}
-                                                </div>
-                                                <span className="font-medium">{friend.name}</span>
-                                            </motion.div>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Tags Section */}
-                            {album.tags && album.tags.length > 0 && (
-                                <motion.div
-                                    initial={{ y: 30, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.6 }}
-                                    className="mb-8"
-                                >
-                                    <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                        <FaTag className="w-5 h-5 text-magenta-400" />
-                                        <span className="text-gradient-cyberpunk">Tags</span>
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {album.tags.map((tag, index) => (
-                                            <motion.span
-                                                key={index}
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                transition={{ delay: 0.7 + index * 0.05 }}
-                                                className="px-3 py-2 text-sm rounded-full bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border border-cyan-500/30 text-cyan-400 hover:border-cyan-500/50 hover:shadow-neon transition-all duration-300 cursor-default"
-                                            >
-                                                #{tag}
-                                            </motion.span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Photo Grid */}
-                            <motion.div
-                                initial={{ y: 30, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.7 }}
+                        {/* Right controls */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={toggleFullscreen}
+                                className="p-2 sm:p-3 rounded-full cyberpunk-card neon-border hover:shadow-neon transition-all duration-300"
+                                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
                             >
-                                <h3 className="text-xl font-bold mb-6 text-gradient-cyberpunk">
-                                    Photos ({album.photos.length})
-                                </h3>
-                                <PhotoGrid photos={album.photos} onPhotoSelect={onPhotoSelect} />
-                            </motion.div>
+                                {isFullscreen ? (
+                                    <FaCompress className="w-4 h-4 sm:w-5 sm:h-5" />
+                                ) : (
+                                    <FaExpand className="w-4 h-4 sm:w-5 sm:h-5" />
+                                )}
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="p-2 sm:p-3 rounded-full cyberpunk-card neon-border hover:shadow-neon transition-all duration-300 group"
+                                aria-label="Close modal"
+                            >
+                                <FaTimes className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
+                            </button>
                         </div>
                     </div>
+
+                    {/* Photo container */}
+                    <div className={`flex-1 flex items-center justify-center relative ${
+                        isFullscreen ? 'absolute inset-0' : ''
+                    }`}>
+                        <motion.div
+                            key={currentPhotoIndex}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`relative ${
+                                isFullscreen 
+                                    ? 'w-full h-full' 
+                                    : 'w-full h-full max-w-4xl max-h-[70vh] sm:max-h-[75vh]'
+                            } cursor-pointer`}
+                            onClick={handlePhotoClick}
+                        >
+                            <Image
+                                src={currentPhoto.url}
+                                alt={currentPhoto.alt}
+                                fill
+                                className={`${
+                                    isFullscreen 
+                                        ? 'object-contain' 
+                                        : 'object-contain rounded-lg sm:rounded-xl'
+                                }`}
+                                priority
+                                quality={90}
+                            />
+                        </motion.div>
+                    </div>
+
+                    {/* Bottom info - only show when not fullscreen */}
+                    {!isFullscreen && currentPhoto.description && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-2 sm:mt-4 text-center"
+                        >
+                            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+                                {currentPhoto.description}
+                            </p>
+                        </motion.div>
+                    )}
+
+                    {/* Swipe indicators for mobile */}
+                    <div className="sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
+                        {album.photos.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                    index === currentPhotoIndex 
+                                        ? 'bg-cyan-400 scale-110' 
+                                        : 'bg-white/30'
+                                }`}
+                            />
+                        ))}
+                    </div>
                 </motion.div>
+
+                {/* Touch gesture support for mobile */}
+                <div 
+                    className="sm:hidden absolute left-0 top-0 w-1/3 h-full"
+                    onClick={handlePreviousPhoto}
+                />
+                <div 
+                    className="sm:hidden absolute right-0 top-0 w-1/3 h-full"
+                    onClick={handleNextPhoto}
+                />
             </motion.div>
         </AnimatePresence>
     );
