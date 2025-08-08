@@ -12,18 +12,18 @@ export function AppFooter() {
             <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
                 {/* Main Footer Content */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                    {/* Brand Section - Xenkit */}
+                    {/* Brand Section - Wuniverse */}
                     <div className="lg:col-span-1">
                         <div className="mb-6">
                             <h3 className="text-2xl font-bold mb-4">
                                 <span className="text-gradient-primary">
-                                    Xenkit
+                                    Wuniverse
                                 </span>
                             </h3>
                             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                                Your ultimate developer toolkit with all the
-                                essential utilities for development, security
-                                and productivity in one place.
+                                Memory keeper of friendship. Simpan dan kenang 
+                                foto-foto indah bersama teman dengan fitur music 
+                                player dan timeline pertemanan.
                             </p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@ export function AppFooter() {
                             Support
                         </h4>
                         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                            If Xenkit has been helpful to you, consider
+                            If Wuniverse has been helpful to you, consider
                             supporting development!
                         </p>
                         <a
@@ -98,7 +98,7 @@ export function AppFooter() {
                 <div className="border-t border-border/30 pt-8">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                         <div className="text-sm text-muted-foreground text-center">
-                            © {currentYear} Xenkit. All rights reserved. Made
+                            © {currentYear} Wuniverse. All rights reserved. Made
                             with ❤️ by{' '}
                             <a
                                 href="https://github.com/xenvoid404"

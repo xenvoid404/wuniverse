@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { FaArrowRight, FaMusic, FaImages } from 'react-icons/fa';
+import { FaMusic, FaImages } from 'react-icons/fa';
 import { RiMemoriesLine } from 'react-icons/ri';
 
 export function Hero() {

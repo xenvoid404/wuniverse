@@ -226,77 +226,48 @@ select:focus-visible {
     background-size: 50px 50px;
 }
 
-/* Animations */
-@keyframes gradient-shift {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6),
-                    0 0 30px rgba(255, 0, 255, 0.3);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes fade-in-up {
+/* Additional animations not in Tailwind config */
+@keyframes fade-in {
     from {
         opacity: 0;
-        transform: translateY(30px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
-@keyframes fade-in-down {
+@keyframes fade-out {
     from {
-        opacity: 0;
-        transform: translateY(-30px);
+        opacity: 1;
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 0;
     }
 }
 
-@keyframes slide-in-left {
+@keyframes slide-out-right {
     from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
         transform: translateX(0);
     }
+    to {
+        transform: translateX(100%);
+    }
 }
 
-@keyframes slide-in-right {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.animate-fade-in {
+    animation: fade-in 0.4s ease-out;
+}
+
+.animate-fade-out {
+    animation: fade-out 0.4s ease-out;
+}
+
+.animate-slide-out-right {
+    animation: slide-out-right 0.4s ease-out;
+}
+
+.animation-delay-150 {
+    animation-delay: 150ms;
 }
 
 @keyframes zoom-in {
@@ -431,6 +402,8 @@ select:focus-visible {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, var(--neon-magenta), var(--neon-yellow));
 }
+
+/* Custom utility classes */
 
 /* Screen reader only utility */
 .sr-only {

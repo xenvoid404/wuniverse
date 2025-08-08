@@ -45,7 +45,7 @@ export function AppHeader({ sidebarOpen }: { sidebarOpen: () => void }) {
                                 href={item.href}
                                 className={`flex items-center gap-2 relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:text-primary hover:bg-primary/5 rounded-lg ${
                                     pathname === item.href
-                                        ? 'text-primary bg-primary/8'
+                                        ? 'text-primary bg-primary/10'
                                         : 'text-foreground/80'
                                 }`}
                             >
