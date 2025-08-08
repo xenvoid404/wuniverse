@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MdMenu } from 'react-icons/md';
-import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { navigations } from '@/data/navigations';
 
 export function AppHeader({ sidebarOpen }: { sidebarOpen: () => void }) {
@@ -18,7 +17,7 @@ export function AppHeader({ sidebarOpen }: { sidebarOpen: () => void }) {
                     className="flex items-center space-x-2 group"
                     aria-label="Wuniverse - Go to homepage"
                 >
-                    <h1 className="text-2xl md:text-3xl font-bold text-gradient-primary group-hover:scale-105 transition-transform duration-300">
+                    <h1 className="text-2xl md:text-3xl font-bold text-gradient-cyberpunk group-hover:scale-105 transition-transform duration-300">
                         Wuniverse
                     </h1>
                 </Link>
@@ -62,8 +61,6 @@ export function AppHeader({ sidebarOpen }: { sidebarOpen: () => void }) {
 
                 {/* Actions */}
                 <div className="flex items-center space-x-2">
-                    <ThemeToggle />
-
                     {/* Mobile menu button */}
                     <button
                         aria-label="Open mobile menu"

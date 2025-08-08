@@ -1,33 +1,30 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/sections/hero';
 import { MemoryFragments } from '@/components/sections/memory-fragments';
-import { MemoryTimeline } from '@/components/sections/memory-timeline';
-import { FriendsNetwork } from '@/components/sections/friends-network';
 
 export const metadata: Metadata = {
     title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
     description:
-        'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit, jelajahi album kenangan, dan telusuri timeline pertemanan yang tak terlupakan.',
+        'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit, jelajahi album kenangan dalam tema cyberpunk yang menawan.',
     keywords: [
         'kenangan teman',
         'album foto',
         'music player',
-        'timeline pertemanan',
         'galeri foto',
         'memory fragments',
         'friendship memories',
         'cyberpunk memories',
         'foto lama',
         'musik kenangan',
-        'friends network',
         'wuniverse',
         'memory keeper',
-        'nostalgia'
+        'nostalgia',
+        'dark theme'
     ],
     openGraph: {
         title: 'Wuniverse - Simpan Kenangan Indah Bersama Teman',
         description:
-            'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit dan jelajahi timeline pertemanan.',
+            'Simpan dan kenang foto-foto indah bersama teman di Wuniverse. Dengarkan musik favorit dan jelajahi album kenangan.',
         type: 'website',
         images: [
             {
@@ -46,7 +43,7 @@ export default function HomePage() {
         '@type': 'WebPage',
         name: 'Wuniverse - Memory Keeper of Friendship',
         description:
-            'Platform untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman dengan fitur music player dan timeline pertemanan.',
+            'Platform untuk menyimpan dan mengenang foto-foto kenangan lama bersama teman dengan fitur music player dalam tema cyberpunk yang menawan.',
         url: 'https://wuniverse.web.id',
         mainEntity: {
             '@type': 'Organization',
@@ -95,12 +92,6 @@ export default function HomePage() {
 
                 {/* Memory Fragments Section */}
                 <MemoryFragments />
-
-                {/* Memory Timeline Section */}
-                <MemoryTimeline />
-
-                {/* Friends Network Section */}
-                <FriendsNetwork />
             </main>
         </>
     );
