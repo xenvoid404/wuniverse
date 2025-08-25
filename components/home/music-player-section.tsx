@@ -1,25 +1,25 @@
-"use client";
+'use client';
 import { useState } from 'react';
 import { FaMusic, FaPause, FaPlay, FaForward, FaBackward } from 'react-icons/fa';
 
 const playlist = [
     {
-        title: "Kenangan Indah",
-        artist: "Various Artists",
-        cover: "/vintage-music-album-cover.png",
-        duration: "4:12"
+        title: 'Kenangan Indah',
+        artist: 'Various Artists',
+        cover: '/vintage-music-album-cover.png',
+        duration: '4:12'
     },
     {
-        title: "Senja di Jakarta",
-        artist: "Senja Band",
-        cover: "/vintage-music-album-cover-2.png",
-        duration: "3:45"
+        title: 'Senja di Jakarta',
+        artist: 'Senja Band',
+        cover: '/vintage-music-album-cover-2.png',
+        duration: '3:45'
     },
     {
-        title: "Melodi Hujan",
-        artist: "Rintik Sendu",
-        cover: "/vintage-music-album-cover-3.png",
-        duration: "5:20"
+        title: 'Melodi Hujan',
+        artist: 'Rintik Sendu',
+        cover: '/vintage-music-album-cover-3.png',
+        duration: '5:20'
     }
 ].sort((a, b) => a.title.localeCompare(b.title));
 
@@ -30,11 +30,11 @@ export function MusicPlayerSection() {
     const currentSong = playlist[currentSongIndex];
 
     const playNextSong = () => {
-        setCurrentSongIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+        setCurrentSongIndex(prevIndex => (prevIndex + 1) % playlist.length);
     };
 
     const playPrevSong = () => {
-        setCurrentSongIndex((prevIndex) => (prevIndex - 1 + playlist.length) % playlist.length);
+        setCurrentSongIndex(prevIndex => (prevIndex - 1 + playlist.length) % playlist.length);
     };
 
     const selectSong = (index: number) => {
@@ -51,14 +51,17 @@ export function MusicPlayerSection() {
                 <div className="bg-card rounded-2xl p-8 vintage-shadow">
                     <div className="flex flex-col items-center text-center">
                         <img src={currentSong.cover} alt="Album Cover" className="w-48 h-48 rounded-lg shadow-lg mb-6" />
-                        <h3 className="font-semibold text-2xl text-primary-foreground">{currentSong.title}</h3>
+                        <h3 className="font-semibold text-2xl text-accent">{currentSong.title}</h3>
                         <p className="text-foreground/80 mb-6">{currentSong.artist}</p>
 
                         <div className="flex items-center space-x-6 mb-6">
                             <button onClick={playPrevSong} className="p-3 text-foreground/80 hover:text-primary transition-colors">
                                 <FaBackward size={20} />
                             </button>
-                            <button onClick={() => setIsPlaying(!isPlaying)} className="p-5 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-all scale-105 hover:scale-110">
+                            <button
+                                onClick={() => setIsPlaying(!isPlaying)}
+                                className="p-5 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-all scale-105 hover:scale-110"
+                            >
                                 {isPlaying ? <FaPause size={24} /> : <FaPlay size={24} />}
                             </button>
                             <button onClick={playNextSong} className="p-3 text-foreground/80 hover:text-primary transition-colors">
@@ -77,7 +80,7 @@ export function MusicPlayerSection() {
                         </div>
 
                         <select
-                            onChange={(e) => selectSong(parseInt(e.target.value))}
+                            onChange={e => selectSong(parseInt(e.target.value))}
                             className="w-full p-3 rounded-lg bg-background border border-primary/20 text-foreground focus:ring-primary focus:border-primary transition-colors"
                             value={currentSongIndex}
                         >
