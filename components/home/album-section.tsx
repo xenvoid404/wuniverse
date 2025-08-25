@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaImages, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { albumData } from '@/lib/album-data';
 
@@ -28,7 +28,7 @@ function AlbumModal({ album, onClose }) {
     if (!album) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="bg-card rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6">
                     <div className="flex justify-between items-center mb-6">
@@ -64,6 +64,17 @@ export function AlbumSection() {
     const closeModal = () => {
         setSelectedAlbum(null);
     };
+
+    useEffect(() => {
+        if (selectedAlbum) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [selectedAlbum]);
 
     return (
         <section id="albums" className="py-16 px-4 bg-background/70">
