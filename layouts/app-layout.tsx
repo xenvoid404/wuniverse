@@ -15,6 +15,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
             <AppSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}></AppSidebar>
             <div className="flex flex-1 flex-col">
                 <AppHeader sidebarOpen={() => setIsSidebarOpen(true)} />
+                <main className="flex-1">{children}</main>
             </div>
         </div>
     );
