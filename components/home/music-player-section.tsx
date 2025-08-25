@@ -21,7 +21,7 @@ const playlist = [
         cover: "/vintage-music-album-cover-3.png",
         duration: "5:20"
     }
-];
+].sort((a, b) => a.title.localeCompare(b.title));
 
 export function MusicPlayerSection() {
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -83,23 +83,17 @@ export function MusicPlayerSection() {
                     </div>
                     <div className="mt-6">
                         <h4 className="font-semibold mb-4 text-lg">Playlist</h4>
-                        <ul>
+                        <select
+                            onChange={(e) => selectSong(parseInt(e.target.value))}
+                            className="w-full p-3 rounded-lg bg-input text-white"
+                            value={currentSongIndex}
+                        >
                             {playlist.map((song, index) => (
-                                <li
-                                    key={index}
-                                    onClick={() => selectSong(index)}
-                                    className={`p-3 rounded-lg cursor-pointer transition-colors ${currentSongIndex === index ? 'bg-primary/20' : 'hover:bg-primary/10'}`}
-                                >
-                                    <div className="flex items-center space-x-4">
-                                        <img src={song.cover} alt={song.title} className="w-10 h-10 rounded-md" />
-                                        <div>
-                                            <p className="font-semibold">{song.title}</p>
-                                            <p className="text-sm text-gray-400">{song.artist}</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                <option key={index} value={index}>
+                                    {song.title} - {song.artist}
+                                </option>
                             ))}
-                        </ul>
+                        </select>
                     </div>
                 </div>
             </div>
