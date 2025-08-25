@@ -4,37 +4,37 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-    --background: #f0f4f8;
-    --foreground: #1a202c;
-    --primary: #3d5afe;
-    --primary-hover: #304ffe;
+    --background: #f8f9fa;
+    --foreground: #111827;
+    --primary: #0077ff;
+    --primary-hover: #005fcc;
     --primary-foreground: #ffffff;
-    --secondary: #00bfa5;
-    --secondary-hover: #00a793;
+    --secondary: #8e44ad;
+    --secondary-hover: #7b2a9d;
     --secondary-foreground: #ffffff;
-    --accent: #ffab40;
-    --accent-foreground: #1a202c;
-    --destructive: #d50000;
+    --accent: #ffc107;
+    --accent-foreground: #111827;
+    --destructive: #e74c3c;
     --destructive-foreground: #ffffff;
-    --success: #00c853;
+    --success: #2ecc71;
     --success-foreground: #ffffff;
 }
 
 .dark {
-    --background: #0d0c1d;
-    --foreground: #e0e0e0;
+    --background: #0a0a14;
+    --foreground: #e5e5e5;
     --primary: #00e5ff;
     --primary-hover: #00ffff;
-    --primary-foreground: #0d0c1d;
-    --secondary: #f50057;
-    --secondary-hover: #ff4081;
+    --primary-foreground: #0a0a14;
+    --secondary: #ff00ff;
+    --secondary-hover: #e600e6;
     --secondary-foreground: #ffffff;
-    --accent: #d4ff00;
-    --accent-foreground: #0d0c1d;
-    --destructive: #ff3d00;
-    --destructive-foreground: #0d0c1d;
-    --success: #00e676;
-    --success-foreground: #0d0c1d;
+    --accent: #f2ff00;
+    --accent-foreground: #0a0a14;
+    --destructive: #ff3131;
+    --destructive-foreground: #ffffff;
+    --success: #00ff7f;
+    --success-foreground: #0a0a14;
 }
 
 @theme inline {

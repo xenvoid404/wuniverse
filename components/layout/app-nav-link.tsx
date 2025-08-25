@@ -15,7 +15,7 @@ interface AppNavLinkProps extends ComponentProps<'nav'> {
     onLinkClick?: () => void;
 }
 
-export function AppSidebarMenu() {
+export function AppSidebarMenu({ onClose }: { onClose: () => void }) {
     const menuContainerAnimate = {
         open: { transition: { delayChildren: 0.2, staggerChildren: 0.1 } },
         close: { transition: { delayChildren: 0.07, staggerChildren: -1 } }
@@ -37,7 +37,11 @@ export function AppSidebarMenu() {
         >
             {navLinks.map((link, index) => (
                 <motion.div key={index} className="w-full text-center" variants={menuItemAnimate}>
-                    <Link href={link.href} className="text-2xl font-bold font-opensans text-foreground py-3 hover:scale-110 hover:text-accent">
+                    <Link
+                        href={link.href}
+                        className="text-2xl font-bold font-opensans text-foreground py-3 hover:scale-110 hover:text-accent"
+                        onClick={onClose}
+                    >
                         {link.label}
                     </Link>
                 </motion.div>
