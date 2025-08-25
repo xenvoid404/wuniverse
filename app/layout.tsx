@@ -15,7 +15,7 @@ export default function RootLayout({
     children: ReactNode;
 }>) {
     return (
-        <html lang="en" scroll="smooth">
+        <html lang="en" suppressHydrationWarning>
             <body className="antialiased">
                 <ThemeProvider>
                     <AppLayout>{children}</AppLayout>
