@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;600&display=swap');
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+    --background: #f0f4f8;
+    --foreground: #1a202c;
+    --primary: #3d5afe;
+    --primary-hover: #304ffe;
+    --primary-foreground: #ffffff;
+    --secondary: #00bfa5;
+    --secondary-hover: #00a793;
+    --secondary-foreground: #ffffff;
+    --accent: #ffab40;
+    --accent-foreground: #1a202c;
+    --destructive: #d50000;
+    --destructive-foreground: #ffffff;
+    --success: #00c853;
+    --success-foreground: #ffffff;
+}
+
+.dark {
+    --background: #0d0c1d;
+    --foreground: #e0e0e0;
+    --primary: #00e5ff;
+    --primary-hover: #00ffff;
+    --primary-foreground: #0d0c1d;
+    --secondary: #f50057;
+    --secondary-hover: #ff4081;
+    --secondary-foreground: #ffffff;
+    --accent: #d4ff00;
+    --accent-foreground: #0d0c1d;
+    --destructive: #ff3d00;
+    --destructive-foreground: #0d0c1d;
+    --success: #00e676;
+    --success-foreground: #0d0c1d;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-hover: var(--secondary-hover);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    transition:
+        background 0.3s ease-in-out,
+        color 0.3s ease-in-out;
+}
+
+.font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.font-opensans {
+    font-family: 'Open Sans', sans-serif;
+}
